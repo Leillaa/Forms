@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Вы вышли из системы{% endblock %}
+{% block content %}
+<div class="container section-hero__container" style="background-image: url({% static './img/logout.jpg' %});">
+  <div class="col-md-8 p-5" style="background: none">
+    <div class="card" style="background: none">
+      <div class="card-header" style="background: none; color: blue; font-size: 24px; font-weight: 800">
+        Выход
+      </div>
+      <div class="card-body" style="background: none; color: lightblue; font-size: 24px; font-weight: 800">
+        <p>
+          Вы вышли из своей учётной записи. Ждём вас снова!
+        </p>
+      </div> <!-- card body -->
+    </div> <!-- card -->
+  </div> <!-- col -->
+</div> <!-- row -->
+{% endblock %}

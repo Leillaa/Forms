@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+{% load static %}
+<head>    
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="descriptions" content="Недвижимость в Самаре, Тольятти, Новокуйбышевске. Земельные участки, Коммерческая недвижимость, Жилая недвижимость. Аренда и продажа офисов, складов, производственных помещений, земельных участков. Эксклюзивные предложения в сфере недвижимости. Агенство недвижимости.">
+  <meta name="keywords" content="Агенство недвижимости, Аренда, Продажа, Объект">
+  <meta name="robots" content="all">
+  <script src="{% static 'js/script.js' %}"></script>
+  <link rel="icon" href="{% static 'img/fav/favicon.ico' %}" type="image">
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/fav/apple-touch-icon.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/fav/favicon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/fav/favicon-16x16.png' %}">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+    <title>
+      {% block title %}{% endblock %}
+    </title>
+  </head>
+  <body>       
+    <header class="header"> 
+      {% include 'includes/header.html' %}
+      {% block header%}{% endblock%}
+    </header>
+    <main>
+      {% block content %}
+        Контент не подвезли :(
+      {% endblock %}
+    </main>
+    <footer>
+      {% include 'includes/footer.html' %} 
+    </footer>
+  </body>
+</html>

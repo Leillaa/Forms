@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+
+    {% block title %}
+        Новый запрос
+    {% endblock title %}
+    {% block content %}
+        <div style="color: red; size: 24px">
+            Content here !!!!!!!!
+        </div>
+            {% for question in questions %}
+                {% include 'includes/question.html'}
+            {% endfor %}
+    {% endblock %}
