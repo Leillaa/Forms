@@ -25,8 +25,10 @@ INSTALLED_APPS = [
     # User apps
     'users',
     'survey',
+    'questionnaire',
 
     # Frameworks
+    'mptt',
 ]
 
 MIDDLEWARE = [
