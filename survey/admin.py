@@ -9,6 +9,10 @@ class AnswerInLine(admin.TabularInline):
     formset = ElementInLineFormSet
     extra = 1
 
+@admin.register(Answer)
+class AnswerAdmin(admin.ModelAdmin):
+    list_display = ['name', 'survey', 'question']
+    pass
 
 @admin.register(Survey)
 class SurveyAdmin(admin.ModelAdmin):

@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import modelformset_factory
+from django.forms import modelformset_factory, inlineformset_factory
 from django.forms.models import BaseInlineFormSet
 
 from .models import Point, Question
@@ -19,15 +19,16 @@ class ElementInLineFormSet(BaseInlineFormSet):
                 'Нужно добавить хоть один элемент'
             )
 
-class QuestionFormSet(forms.ModelForm):
+class QuestionForm(forms.ModelForm):
     answer = forms.CharField(label='Ответ')
 
     class Meta:
         model = Question
-        fields = ['name']
+        fields = ('answer',)
 
-
-class PointForm(forms.ModelForm):
-    class Meta:
-        model = Point
-        fields = '__all__'
+PointFormSet = inlineformset_factory(
+    Point,
+    Question,
+    form=QuestionForm,
+    extra=0
+)

@@ -1,24 +1,28 @@
-<form method="post" href="{% url 'survey:get_answer' %}" enctype="multipart/form-data">
-    {% csrf_token %}
-    <div class="d-flex justify-content-end">
-      <button type="submit" class="btn btn-primary">
-          Дальше
-      </button>
-    </div>
-    <fieldset class="point">
-      <section class="point-answer">
-        <div>ВОПРОС: {{questions}}</div>
-        <ul class="point-form">
-                {% for question in point %}
-                  <tr class="unit-detail-item">
-                    <th class="unit-create-head">{{field.label}}</th>
-                    <th class="unit-create-field">
-                      {{question}}
-                    </th>
-                  </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-        </ul>
-    </fieldset>
-  </form>
+{% extends 'base.html' %}
+{% load static %}
+
+    {% block title %}
+        Опрос:
+    {% endblock title %}
+    {% block content %}
+    <div> {{ questionnaire }}</div>
+    <div> {{ point }} </div>
+      <form method="post" href="#" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="d-flex justify-content-end">
+          <button type="submit" class="btn btn-primary" display:none>
+              Дальше
+          </button>
+        </div>
+        <fieldset class="point">
+            <div>ВОПРОС: {{ point }}</div>
+            <ul class="point-form">
+              {% for question in questions %}
+                <li>
+                {{ question }} {{ form.name }}
+                </li>
+              {% endfor %}
+            </ul>
+          </fieldset>
+      </form>
+    {% endblock %}

@@ -23,12 +23,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # User apps
+    'api',
     'users',
     'survey',
     'questionnaire',
 
     # Frameworks
-    'mptt',
+    'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [

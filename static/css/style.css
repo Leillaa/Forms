@@ -1,0 +1,12 @@
+.btn {
+    color: red;
+}
+
+.header {
+    width: 100%;
+    height: 10vh;
+    background: #BDDFF8;
+    font-style: 46px;
+    text-align: center;
+    line-height: 86px;
+}
