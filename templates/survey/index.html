@@ -2,14 +2,15 @@
 {% load static %}
 
     {% block title %}
-        Новый запрос
+        Добро пожаловать в анкету
     {% endblock title %}
     {% block content %}
-        <div style="color: red; size: 24px">
-            Content here !!!!!!!!
-            <a class="button" href="{% url 'survey:answers' 4 %}">Пройти опрос</a>
+    <div style="max-width: 600px; margin: 60px auto; background: #f8f9fa; border-radius: 16px; box-shadow: 0 2px 12px #0002; padding: 40px 32px 32px 32px; text-align: center;">
+        <h1 style="font-size: 2em; color: #1976d2; margin-bottom: 18px;">Добро пожаловать!</h1>
+        <p style="font-size: 1.15em; color: #333; margin-bottom: 30px;">Выберите опрос для прохождения:</p>
+        <div style="display: flex; flex-direction: column; gap: 18px; align-items: center;">
+            <a class="button" style="display: inline-block; background: #1976d2; color: #fff; border: none; border-radius: 8px; padding: 14px 38px; font-size: 1.2em; font-weight: 500; cursor: pointer; text-decoration: none; transition: background 0.2s; margin-bottom: 0;" href="/survey4/1/">Опрос №4</a>
+            <a class="button" style="display: inline-block; background: #388e3c; color: #fff; border: none; border-radius: 8px; padding: 14px 38px; font-size: 1.2em; font-weight: 500; cursor: pointer; text-decoration: none; transition: background 0.2s; margin-bottom: 0;" href="/survey5/1/">Опрос №5 (стандартный)</a>
         </div>
-            {% for question in questions %}
-                {% include 'includes/question.html'}
-            {% endfor %}
+    </div>
     {% endblock %}

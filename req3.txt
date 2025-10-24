@@ -1,7 +1,0 @@
-Django==4.2.8
-python-dotenv==1.0.0
-sqlparse==0.4.4
-typing_extensions==4.9.0
-django-mptt==0.14.0
-djangorestframework==3.12.4
-gunicorn

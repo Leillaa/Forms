@@ -1,0 +1,14 @@
+Metadata-Version: 2.1
+Name: productmd
+Version: 1.33
+Summary: Product, compose and installation media metadata library
+Home-page: https://github.com/release-engineering/productmd
+Author: Daniel Mach
+Author-email: dmach@redhat.com
+License: LGPLv2.1
+Platform: UNKNOWN
+Requires-Dist: six
+
+UNKNOWN
+
+

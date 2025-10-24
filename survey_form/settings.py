@@ -6,8 +6,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = os.getenv('SECRET_KEY')
-DEBUG = os.getenv('DEBUG', default=False)
+SECRET_KEY = "django-insecure-1234567890abcdefghijklmnopqrstuvwxyz"
+DEBUG = os.getenv('DEBUG', default=True)
 
 ALLOWED_HOSTS = ['*']
 
@@ -122,16 +122,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
+
 STATIC_URL = 'static/'
-
-if DEBUG:
-    STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
-else:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
+STATIC_ROOT = '/app/static/'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = '/app/media/'
 
 
 

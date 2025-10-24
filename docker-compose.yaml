@@ -1,0 +1,31 @@
+version: '3.8'
+name: help_desk
+services:
+#
+#  db:
+#    image: postgres:13.0-alpine
+#    restart: always
+#    environment:
+#      POSTGRES_DB: "postgres"
+#      POSTGRES_USER: "postgres"
+#      POSTGRES_PASSWORD: "postgres"
+#    volumes:
+#      - postgres_data:/var/lib/postgresql/data/
+
+  backend:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 8000:8000
+    volumes:
+      - ./db.sqlite3:/app/db.sqlite3
+      - static_dir:/app/static/
+      - media_dir:/app/media/
+
+volumes:
+  static_dir:
+  static:
+  media_dir:
+

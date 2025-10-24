@@ -1,0 +1,5 @@
+Django==5.2.7
+djangorestframework==3.16.1
+gunicorn
+Pillow==9.4.0
+python-dotenv==1.1.1
