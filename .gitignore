@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Django
+*.log
+.env
+
+# Virtual environments
+venv/
+venvs/
+ENV/
+.env/
+
+# VS Code
+.vscode/
+
+# MacOS
+.DS_Store
+
+# Docker
+*.pid
+*.db
+docker-compose.override.yml
+
+# Other
+*.bak
+*.swp
+*.swo
+.idea/
