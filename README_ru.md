@@ -326,8 +326,8 @@ GET  /api/surveys/           # Список пройденных опросов
 ## 👨‍💻 Автор
 
 **Leila Chernova**
-- GitHub: [@SergSukh](https://github.com/SergSukh)
-- Проект: [survey_form_2](https://github.com/SergSukh/survey_form_2)
+- GitHub: [@Leillaa](https://github.com/Leillaa)
+- Проект: [Forms](https://github.com/Leillaa/Forms)
 
 ## 📄 Лицензия
 
