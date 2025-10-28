@@ -343,7 +343,7 @@ GET  /api/surveys/           # List completed surveys
 
 ## 👨‍💻 Author
 **Leila Chernova**  
-- GitHub: [@Leillaa][https://github.com/Leillaa] 
+- GitHub: [@Leillaa](https://github.com/Leillaa)
 - Project: [Forms](https://github.com/Leillaa/Forms/)
 
 ---
