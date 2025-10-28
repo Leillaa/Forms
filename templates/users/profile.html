@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Профиль пользователя{% endblock %}
+{% block content %}
+<div class="container py-5">
+  <div class="card shadow-sm mx-auto" style="max-width: 500px;">
+    <div class="card-body text-center">
+      <h2 class="mb-3" style="color:#1976d2;">{{ username }}</h2>
+      <p class="mb-1 text-muted">Аккаунт создан: {{ date_joined|date:"d.m.Y H:i" }}</p>
+      <hr>
+      <h5 class="mb-3">Пройденные опросы</h5>
+      {% if surveys %}
+        <ul class="list-group list-group-flush">
+          {% for survey in surveys %}
+            <li class="list-group-item">
+              <strong>{{ survey.questionnaire.name }}</strong>
+              <span class="text-muted">({{ survey.date|date:"d.m.Y" }})</span>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="text-muted">Вы ещё не проходили опросы.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

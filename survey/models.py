@@ -14,6 +14,13 @@ class Survey(models.Model):
         related_name='surveys',
         verbose_name='Опрос'
     )
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='surveys',
+        verbose_name='Пользователь',
+        null=True, blank=True
+    )
 
     class Meta:
         verbose_name = 'Ответ на опрос'

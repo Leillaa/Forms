@@ -3,11 +3,13 @@ from questionnaire.models import Point, Question, Answer as VariantAnswer
 
 def survey_step(request, questionnaire_id=4, question_number=1):
     questionnaire = get_object_or_404(Questionnaire, id=questionnaire_id)
-    # Получаем все пункты (Point) по порядку
     points = Point.objects.filter(questionnaire=questionnaire).order_by('number')
     total_questions = points.count()
     if question_number < 1 or question_number > total_questions:
-        return render(request, 'survey/success.html')
+        return render(request, 'survey/point.html', {
+            'questionnaire': questionnaire,
+            'success': True,
+        })
     point = points[question_number-1]
     q_type = point.type_point
     variants = Question.objects.filter(point=point) if q_type in ['radio', 'check_box'] else []
@@ -20,11 +22,10 @@ def survey_step(request, questionnaire_id=4, question_number=1):
             error = 'Выберите оценку от 1 до 5'
         elif q_type == 'radio' and not answer_val:
             error = 'Выберите вариант'
-        # text_or_non и check_box могут быть пустыми
         if not error:
-            survey = Survey.objects.filter(questionnaire=questionnaire).order_by('-id').first()
+            survey = Survey.objects.filter(questionnaire=questionnaire, user=request.user).order_by('-id').first()
             if not survey:
-                survey = Survey.objects.create(questionnaire=questionnaire)
+                survey = Survey.objects.create(questionnaire=questionnaire, user=request.user)
             if q_type == 'check_box':
                 for val in answer_val:
                     variant = Question.objects.filter(id=val, point=point).first()
@@ -37,11 +38,20 @@ def survey_step(request, questionnaire_id=4, question_number=1):
                         Answer.objects.create(name=variant.name, question=variant, survey=survey)
             else:
                 if answer_val:
-                    # Для text/text_or_non/raiting — берём первый Question, связанный с этим Point
                     variant = Question.objects.filter(point=point).first()
                     if variant:
                         Answer.objects.create(name=answer_val, question=variant, survey=survey)
-            return redirect('survey:survey_step', question_number=question_number+1)
+            # Если последний вопрос, показываем успех
+            if question_number+1 > total_questions:
+                return render(request, 'survey/point.html', {
+                    'questionnaire': questionnaire,
+                    'success': True,
+                })
+            # Переход по правильному маршруту
+            if questionnaire_id == 4:
+                return redirect('survey:survey_step', question_number=question_number+1)
+            elif questionnaire_id == 6:
+                return redirect('survey:survey5_step', question_number=question_number+1)
     return render(request, 'survey/point.html', {
         'questionnaire': questionnaire,
         'point': point,
@@ -60,7 +70,9 @@ from questionnaire.forms import PointFormSet
 
 
 def index(request):
-    return render(request, 'survey/index.html')
+    from users.forms import CreationForm
+    form = CreationForm()
+    return render(request, 'survey/index.html', {'form': form})
 
 def get_answer(request, survey, questionnaire, point):
     form = AnswerForm(request.POST or None)

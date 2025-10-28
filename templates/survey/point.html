@@ -4,52 +4,62 @@
 {% block title %}Опрос{% endblock %}
 
 {% block content %}
-<div style="max-width: 600px; margin: 40px auto;">
-    <div style="background: #f8f9fa; border-radius: 12px; box-shadow: 0 2px 8px #0001; padding: 32px 28px 24px 28px;">
-        <h2 style="margin-bottom: 10px; font-size: 1.5em; color: #222;">{{ questionnaire }}</h2>
-    <h3 style="margin-bottom: 24px; font-size: 1.1em; color: #444;">{{ point.name }}</h3>
-        <form method="post">
+<div id="survey-modal-overlay" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.18);display:flex;justify-content:center;align-items:center;z-index:1000;">
+    <div id="survey-modal-content" style="background:#fff;border-radius:24px;box-shadow:0 8px 32px rgba(0,0,0,0.12);max-width:540px;width:100%;padding:40px 32px 32px 32px;position:relative;display:flex;flex-direction:column;align-items:center;">
+        <h2 style="font-size:2.2rem;font-weight:700;color:#2563eb;margin-bottom:18px;text-align:center;">{{ questionnaire }}</h2>
+        <div style="font-size:1.1rem;color:#222;margin-bottom:28px;text-align:center;">{{ point.name }}</div>
+        {% if success %}
+          <div style="font-size:1.3rem;color:#388e3c;text-align:center;padding:40px 0 30px 0;font-weight:600;">Успешно!</div>
+        {% else %}
+        <form method="post" style="width:100%;display:flex;flex-direction:column;gap:18px;">
             {% csrf_token %}
-            <div style="display: flex; flex-direction: column; gap: 24px;">
-                <div style="border: 1px solid #bcd; border-radius: 8px; background: #fff; padding: 18px 16px 24px 16px; margin-bottom: 0; display: flex; flex-direction: column; align-items: stretch;">
-                    <!-- Вопрос — это point.name, уже выше -->
-                    {% if q_type == 'radio' %}
-                        {% if variants %}
+            <div>
+                {% if q_type == 'radio' %}
+                    {% if variants %}
+                        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:8px;">
                             {% for variant in variants %}
-                                <label style="margin-bottom: 6px;">
-                                    <input type="radio" name="answer" value="{{ variant.id }}" required>
+                                <label style="font-size:1.1rem;font-weight:500;">
+                                    <input type="radio" name="answer" value="{{ variant.id }}" required style="margin-right:8px;">
                                     {{ variant.name }}
-                                </label><br>
+                                </label>
                             {% endfor %}
-                        {% else %}
-                            <span style="color: #888;">Нет вариантов ответа</span>
-                        {% endif %}
-                    {% elif q_type == 'check_box' %}
-                        {% if variants %}
-                            {% for variant in variants %}
-                                <label style="margin-bottom: 6px;">
-                                    <input type="checkbox" name="answer" value="{{ variant.id }}">
-                                    {{ variant.name }}
-                                </label><br>
-                            {% endfor %}
-                        {% else %}
-                            <span style="color: #888;">Нет вариантов ответа</span>
-                        {% endif %}
-                    {% elif q_type == 'text' or q_type == 'text_or_non' %}
-                        <input type="text" name="answer" class="form-control" {% if q_type == 'text' %}required{% endif %}>
-                    {% elif q_type == 'raiting' %}
-                        <input type="number" name="answer" min="1" max="5" required>
+                        </div>
+                    {% else %}
+                        <span style="color:#888;">Нет вариантов ответа</span>
                     {% endif %}
-                </div>
+                {% elif q_type == 'check_box' %}
+                    {% if variants %}
+                        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:8px;">
+                            {% for variant in variants %}
+                                <label style="font-size:1.1rem;font-weight:500;">
+                                    <input type="checkbox" name="answer" value="{{ variant.id }}" style="margin-right:8px;">
+                                    {{ variant.name }}
+                                </label>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <span style="color:#888;">Нет вариантов ответа</span>
+                    {% endif %}
+                {% elif q_type == 'text' or q_type == 'text_or_non' %}
+                    <input type="text" name="answer" style="width:100%;padding:10px 14px;border-radius:12px;border:1px solid #e5e7eb;font-size:1rem;margin-bottom:6px;background:#f9fafb;" {% if q_type == 'text' %}required{% endif %}>
+                {% elif q_type == 'raiting' %}
+                    <input type="number" name="answer" min="1" max="5" required style="width:100%;padding:10px 14px;border-radius:12px;border:1px solid #e5e7eb;font-size:1rem;margin-bottom:6px;background:#f9fafb;">
+                {% endif %}
             </div>
             {% if error %}
-                <div style="color: red; margin: 10px 0;">{{ error }}</div>
+                <div style="color:red;margin:10px 0;">{{ error }}</div>
             {% endif %}
-            <div style="text-align: right; margin-top: 28px;">
-                <button type="submit" style="background: #1976d2; color: #fff; border: none; border-radius: 6px; padding: 10px 28px; font-size: 1.1em; font-weight: 500; cursor: pointer; transition: background 0.2s;">Дальше</button>
-            </div>
-            <div style="margin-top: 10px; color: #888; font-size: 0.95em;">Вопрос {{ question_number }} из {{ total_questions }}</div>
+            <button type="submit" style="background:#2563eb;color:#fff;border:none;border-radius:12px;padding:12px 0;font-size:1.1rem;font-weight:600;cursor:pointer;margin-top:18px;width:100%;box-shadow:0 2px 8px rgba(37,99,235,0.08);transition:background 0.2s;">Дальше</button>
+            <div style="margin-top:10px;color:#888;font-size:0.95em;text-align:center;">Вопрос {{ question_number }} из {{ total_questions }}</div>
         </form>
+        {% endif %}
     </div>
+<script>
+document.getElementById('survey-modal-overlay').addEventListener('click', function(e) {
+    if (e.target === this) {
+        window.location.href = '/';
+    }
+});
+</script>
 </div>
 {% endblock %}

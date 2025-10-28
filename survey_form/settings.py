@@ -11,6 +11,7 @@ DEBUG = os.getenv('DEBUG', default=True)
 
 ALLOWED_HOSTS = ['*']
 
+LOGIN_REDIRECT_URL = '/users/profile/'
 
 # Application definition
 

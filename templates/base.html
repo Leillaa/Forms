@@ -1,3 +1,35 @@
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'ru'}, 'google_translate_element');
+      }
+    </script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script>
+      // Mini translate button functionality
+      document.addEventListener('DOMContentLoaded', function() {
+        var btn = document.getElementById('translate-btn');
+        var isEnglish = false;
+        
+        if (btn) {
+          btn.addEventListener('click', function() {
+            // Wait for Google Translate to load
+            var attempts = 0;
+            var interval = setInterval(function() {
+              var select = document.querySelector('.goog-te-combo');
+              if (select) {
+                clearInterval(interval);
+                // Toggle between English and Russian
+                select.value = isEnglish ? 'ru' : 'en';
+                select.dispatchEvent(new Event('change'));
+                isEnglish = !isEnglish;
+              }
+              attempts++;
+              if (attempts > 20) clearInterval(interval); // Stop after 2 seconds
+            }, 100);
+          });
+        }
+      });
+    </script>
 <!DOCTYPE html>
 <html lang="ru">
 {% load static %}
@@ -18,10 +50,76 @@
       {% block title %}{% endblock %}
     </title>
   </head>
-  <body>       
+  <body>
+    <!-- Hidden Google Translate element -->
+    <div id="google_translate_element" style="display:none;"></div>
     <header class="header"> 
-      {% include 'includes/header.html' %}
-      {% block header%}{% endblock%}
+  <a href="/" class="btn btn-outline-primary" style="position: absolute; top: 20px; left: 30px; z-index: 1000;">Домой</a>
+  {% include 'includes/header.html' %}
+  <button id="translate-btn" class="mini-translate-btn" title="Перевести сайт" style="position: absolute; top: 25px; right: 220px; z-index: 1000;">🌐</button>
+  {% block header%}{% endblock%}
+      {% if not request.user.is_authenticated %}
+        <div style="position: absolute; top: 20px; right: 30px; z-index: 1000; display: flex; gap: 10px;">
+          <!-- Кнопка Войти -->
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
+            Войти
+          </button>
+          <!-- Кнопка Создать аккаунт -->
+          <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#signupModal">
+            Создать аккаунт
+          </button>
+        </div>
+        <!-- Модальное окно входа -->
+        <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel">Вход в аккаунт</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form method="post" action="{% url 'users:login' %}">
+                  {% csrf_token %}
+                  <div class="mb-3">
+                    <label for="id_username" class="form-label">Имя пользователя</label>
+                    <input type="text" class="form-control" id="id_username" name="username" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="id_password" class="form-label">Пароль</label>
+                    <input type="password" class="form-control" id="id_password" name="password" required>
+                  </div>
+                  <button type="submit" class="btn btn-success">Войти</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Модальное окно регистрации -->
+        <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="signupModalLabel">Создать аккаунт</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                {% include 'users/_signup_form.html' %}
+              </div>
+            </div>
+          </div>
+        </div>
+      {% else %}
+        <div style="position: absolute; top: 20px; right: 30px; z-index: 1000; display: flex; gap: 10px;">
+          <a href="{% url 'users:profile' %}" class="btn btn-outline-primary">Профиль</a>
+          <form method="post" action="{% url 'users:logout' %}" style="margin:0;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-danger">Выйти</button>
+          </form>
+        </div>
+      {% endif %}
+      <!-- Bootstrap JS -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     </header>
     <main>
       {% block content %}

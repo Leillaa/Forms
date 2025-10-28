@@ -1,4 +1,4 @@
-#!/Users/leilachernova/Desktop/Работа/Програмирование/survey_form_2/venv/bin/python3.11
+#!/Users/leilachernova/Desktop/Работа/Програмирование/survey_form_2/venv/bin/python3.14
 import sys
 from pip._internal.cli.main import main
 if __name__ == '__main__':
